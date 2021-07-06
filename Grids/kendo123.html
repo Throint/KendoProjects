@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Kendo UI Snippet</title>
+
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.2.617/styles/kendo.default-v2.min.css"/>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2020.2.617/js/kendo.all.min.js"></script>
+</head>
+<body>
+  
+<div id="grid"></div>
+  
+<input id="clickMe" type="button" value="clickme" onclick="checkFilters();" />
+  
+<script>
+    // An array of all brands.
+    var brands = [
+        { brandId: 1, name: "Ford" },
+        { brandId: 2, name: "BMW" }
+    ];
+
+    // An array of all models.
+    var models = [
+        { modelId: 1, name: "Explorer", brandId: 1},
+        { modelId: 2, name: "Focus", brandId: 1},
+        { modelId: 3, name: "X3", brandId: 2},
+        { modelId: 4, name: "X5", brandId: 2}
+    ];
+
+    $("#grid").kendoGrid({
+        dataSource: {
+            data: [
+                { id: 1, brandId: 1, modelId: 2 },
+                { id: 1, brandId: 1, modelId: 2 }// initial data item (Ford, Focus)
+            ],
+            schema: {
+                model: {
+                    id: "id",
+                    fields: {
+                        id: { editable: false }, // the id field is not editable
+                        brandId:{type:"string"},
+                        modelId:{type:"string"}
+                    }
+                }
+            }
+        },
+        editable: "inline", // use inline mode so both dropdownlists are visible (required for cascading)
+        columns: [
+        { field: "id",locked:true,width:250 ,filterable:false},
+        {
+            // the brandId column
+            title: "Brand",
+            field: "brandId", // bound to the brandId field
+            template: "#= brandName(brandId) #", // the template shows the name corresponding to the brandId field
+            editor: function(container) { // use a dropdownlist as an editor
+                // create an input element with id and name set as the bound field (brandId)
+                var input = $('<input id="brandId" name="brandId">');
+                // append to the editor container
+                input.appendTo(container);
+
+                // initialize a dropdownlist
+                input.kendoDropDownList({
+                    dataTextField: "name",
+                    dataValueField: "brandId",
+                    dataSource: brands // bind it to the brands array
+                }).appendTo(container);
+            },width:250,filterable:{multi:true}
+        },
+        {
+            // The modelId column.
+            title: "Model",
+            field: "modelId",  // bound to the modelId field
+            template: "#= modelName(modelId) #", //the template shows the name corresponding to the modelId field
+            editor: function(container) { // use a dropdownlist as an editor
+                var input = $('<input id="modelId" name="modelId">');
+                input.appendTo(container);
+                input.kendoDropDownList({
+                    dataTextField: "name",
+                    dataValueField: "modelId",
+                    cascadeFrom: "brandId", // cascade from the brands dropdownlist
+                    dataSource: models // bind it to the models array
+                }).appendTo(container);
+            },width:250, filterable:{multi:true}
+        },
+        { command: ["edit"], title: "&nbsp;", width: "90px" }
+        ],
+      filterable:true
+    });
+
+
+    function brandName(brandId) {
+        for (var i = 0; i < brands.length; i++) {
+            if (brands[i].brandId == brandId) {
+                return brands[i].name;
+            }
+        }
+    }
+
+    function modelName(modelId) {
+        for (var i = 0; i < models.length; i++) {
+            if (models[i].modelId == modelId) {
+                return models[i].name;
+            }
+        }
+    }
+  
+    function checkFilters() {
+       let myGrid = $("#grid").data("kendoGrid");
+       let filter = myGrid.dataSource.filter();
+       if (filter) {
+          console.log(filter.logic);  // displays "and"
+          console.log(myGrid.dataSource.filter);
+       }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<div id="grid"></div>
+<script>
+$("#grid").kendoGrid({
+  toolbar: ["pdf"],
+  columns: [
+    { field: "name" }
+  ],
+  dataSource: {
+    data: [{ name: "Jane Doe"},
+           { name: "John Doe"},
+           { name: "Tim Doe"},
+           { name: "Alice Doe"}],
+    pageSize: 2
+  },
+  pdf: {
+    allPages: true
+  }
+});
+var grid = $("#grid").data("kendoGrid");
+grid.saveAsPDF();
+</script>
