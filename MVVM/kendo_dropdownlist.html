@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Kendo UI Snippet</title>
+
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2021.2.616/styles/kendo.default-v2.min.css"/>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2021.2.616/js/kendo.all.min.js"></script>
+</head>
+<body>
+  
+    <div id="example">
+      <p>Kendo UI DropDownList</p>
+      <select data-role="dropdownlist"
+              data-bind="source: fruits"
+              data-text-field="name"
+              data-value-field="id"></select>
+
+        <p>Select</p>
+        <select data-bind="source: fruits" data-template="select-template"></select>
+
+        <script id="select-template" type="text/x-kendo-template">
+            <option value="#: id #">#: name #</option>
+        </script>
+
+        <p>Unordered list</p>
+        <ul data-bind="source: fruits" data-template="list-template">
+            <li></li>
+        </ul>
+
+        <script id="list-template" type="text/x-kendo-template">
+            <li><strong>ID</strong> #: id #, <strong>Name</strong> #: name #</li>
+        </script>
+
+        <p>Table</p>
+        <table>
+            <thead><th>ID</th><th>Name</th></thead>
+            <tbody data-bind="source: fruits" data-template="row-template">
+                <tr><td></td><td></td></tr>
+            </tbody>
+        </table>
+        <script id="row-template" type="text/x-kendo-template">
+            <tr><td>#: id #</td><td>#: name #</td></tr>
+        </script>
+    </div>
+
+    <script>
+
+      var viewModel = kendo.observable({
+        fruits: new kendo.data.DataSource({
+          data: [
+            { id: 1, name: "Apples" },
+            { id: 2, name: "Oranges" },
+            { id: 3, name: "Bananas" }
+          ],
+          schema: {
+            model: {
+              fields: {
+                id: { type: "number" },
+                name: { type: "string" }
+              }
+            }
+          }
+        })
+      });
+
+      kendo.bind("#example", viewModel);
+
+    </script>
+
+    <style>
+
+        table {
+            border-collapse: collapse;
+        }
+
+        table th,
+        table td {
+            border: 1px solid #999;
+            padding: .3em .6em;
+            text-align: left;
+        }
+
+    </style>
+</body>
+</html>

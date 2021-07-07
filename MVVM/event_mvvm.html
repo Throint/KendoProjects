@@ -1,0 +1,38 @@
+<html>
+<head>
+    <base href="https://demos.telerik.com/kendo-ui/mvvm/index">
+    <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <title></title>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2021.2.616/styles/kendo.default-v2.min.css" />
+
+    <script src="https://kendo.cdn.telerik.com/2021.2.616/js/jquery.min.js"></script>
+    
+    
+    <script src="https://kendo.cdn.telerik.com/2021.2.616/js/kendo.all.min.js"></script>
+    
+    
+   
+</head>
+<div id="view">
+    <span data-bind="events: { mouseover: showDescription, mouseout: hideDescription }">Show description</span>
+    <span data-bind="visible: isDescriptionShown, text: description"></span>
+</div>
+<script>
+    var viewModel = kendo.observable({
+        description: "Description",
+        isDescriptionShown: false,
+        showDescription: function(e) {
+            // show the span by setting isDescriptionShown to true
+            this.set("isDescriptionShown", true);
+            e.stopPropagation();
+        },
+        hideDescription: function(e) {
+            // hide the span by setting isDescriptionShown to false
+            this.set("isDescriptionShown", false);
+            e.stopPropagation();
+        }
+    });
+
+    kendo.bind($("#view"), viewModel);
+</script>
+</html>

@@ -1,0 +1,46 @@
+  
+  <head>
+    <base href="https://demos.telerik.com/kendo-ui/mvvm/index">
+    <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <title></title>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2021.2.616/styles/kendo.default-v2.min.css" />
+
+    <script src="https://kendo.cdn.telerik.com/2021.2.616/js/jquery.min.js"></script>
+    
+    
+    <script src="https://kendo.cdn.telerik.com/2021.2.616/js/kendo.all.min.js"></script>
+    
+    
+   
+</head>
+  <div data-bind="source: data" data-template="tmp"></div>
+  <script id="tmp" type="text/x-kendo-template">
+    <div>
+      <input data-bind="value: quantity" />
+      <span data-bind="text: price"></span>
+      <span data-bind="text: total"></span>
+    </div>
+  </script>
+  <script>
+
+    var Product = kendo.data.Model.define({
+      fields: {
+        "quantity": {
+          type: "number"
+        },
+        "price": {
+          type: "number"
+        }
+      },
+      total: function() { //define the calculated field
+        return this.get("quantity") * this.get("price");
+      }
+    });
+
+    var viewModel = kendo.observable({
+      data: [
+        new Product({ "quantity": 1, "price": 2 })
+      ]
+    });
+    kendo.bind($(document.body), viewModel);
+  </script>

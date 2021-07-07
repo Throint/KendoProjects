@@ -1,0 +1,42 @@
+        
+<html>
+<head>
+    <base href="https://demos.telerik.com/kendo-ui/mvvm/index">
+    <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <title></title>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2021.2.616/styles/kendo.default-v2.min.css" />
+
+    <script src="https://kendo.cdn.telerik.com/2021.2.616/js/jquery.min.js"></script>
+    
+    
+    <script src="https://kendo.cdn.telerik.com/2021.2.616/js/kendo.all.min.js"></script>
+    
+    
+   
+</head>
+    <p><label><input type="checkbox" data-bind="checked: slideValue" />toggle slideValue</label></p>
+
+    <div id="target" style="width:200px;height:200px;background: rgb(20, 194, 35);" data-bind="slide: slideValue">
+        Orange Square.
+    </div>
+
+    <script>
+        kendo.data.binders.slide = kendo.data.Binder.extend({
+            refresh: function() {
+                var value = this.bindings["slide"].get();
+
+                if (value) {
+                    $(this.element).slideDown();
+                } else {
+                    $(this.element).slideUp();
+                }
+            }
+        });
+
+        var viewModel = kendo.observable({
+            slideValue: true
+        });
+
+        kendo.bind(document.body, viewModel);
+    </script>
+    </html>

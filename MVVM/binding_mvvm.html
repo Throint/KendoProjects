@@ -1,0 +1,46 @@
+
+<html>
+<head>
+    <base href="https://demos.telerik.com/kendo-ui/mvvm/index">
+    <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <title></title>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2021.2.616/styles/kendo.default-v2.min.css" />
+
+    <script src="https://kendo.cdn.telerik.com/2021.2.616/js/jquery.min.js"></script>
+    
+    
+    <script src="https://kendo.cdn.telerik.com/2021.2.616/js/kendo.all.min.js"></script>
+    
+    
+   
+</head>
+<div id="form">
+    <fieldset>
+    <legend>WORKING:</legend>
+     <input data-bind="value: filter.name" data-value-update="keypress" />
+     <input data-bind="value: filter.name" data-value-update="keypress" />
+     <button data-bind="events: {click: click}">this.set("filter.name", "test");</button>
+     </fieldset>
+</div>
+<script>
+    $(function() {
+      var BaseVM = kendo.data.ObservableObject.extend({
+        init: function(values) {
+          //Define default values
+          var defaultValues = {
+            filter: {name: "John Doe"}
+          };
+
+          kendo.data.ObservableObject.fn.init.call(this, $.extend({}, defaultValues, values));
+        },
+        click: function() {
+          this.set("filter.name", "test");
+        }
+      });
+
+      var viewModel2 = BaseVM.extend({});
+
+      kendo.bind($("#form"), new viewModel2());
+    });
+</script>
+</html>

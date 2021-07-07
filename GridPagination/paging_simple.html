@@ -16,16 +16,22 @@
 $("#grid").kendoGrid({
   columns: [
     { field: "productName" },
-    { field: "category" }
+    { field: "category" },
+    {field:"price"}
   ],
   dataSource: [
-    { productName: "Tea", category: "Beverages" },
-    { productName: "Coffee", category: "Beverages" },
-    { productName: "Ham", category: "Food" },
-    { productName: "Bread", category: "Food" }
+    { productName: "Tea", category: "Beverages", price:100 },
+    { productName: "Coffee", category: "Beverages", price:150 },
+    { productName: "Ham", category: "Food", price:200 },
+    { productName: "Bread", category: "Food" , price: 350},
+    { productName: "Apple", category: "Fruit", price:100 },
+    { productName: "Pear", category: "Fruit", price:150 },
+    { productName: "Orange", category: "Fruit", price:200 },
+  
   ],
   pageable: {
     pageSize: 2,
+    pageSizes:[2,5,10, "all"],
     buttonCount: 1
   }
 });

@@ -1,0 +1,39 @@
+
+<html>
+<head>
+    <base href="https://demos.telerik.com/kendo-ui/mvvm/index">
+    <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <title></title>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2021.2.616/styles/kendo.default-v2.min.css" />
+
+    <script src="https://kendo.cdn.telerik.com/2021.2.616/js/jquery.min.js"></script>
+    
+    
+    <script src="https://kendo.cdn.telerik.com/2021.2.616/js/kendo.all.min.js"></script>
+    
+    
+   
+</head>
+<div data-bind="text: person.display">
+</div>
+<img id="logo" data-bind="attr: { src: imageSource, alt: imageAlt }" />
+<script>
+var viewModel = kendo.observable({
+    person: {
+        name: "John Doe", 
+        display: function(){
+            return `Person name is ${this.name}`;
+        }
+    }
+});
+var viewModelImage = kendo.observable({
+    imageSource: "https://www.telerik.com/image/kendo-logo.png",
+    imageAlt: "Kendo Logo"
+});
+
+kendo.bind($("#logo"), viewModelImage);
+alert(viewModel.get("person.name"));
+viewModel.set("person.name", "Name changed");
+alert(viewModel.get("person.name"));
+kendo.bind($("div"), viewModel);
+</script>
